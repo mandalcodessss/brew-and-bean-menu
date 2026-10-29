@@ -3,7 +3,7 @@ const CONFIG = {
   name: 'Brew & Bean',
   tagline: 'Fresh coffee, good vibes',
   currency: '₹',
-  sheetCsvUrl: '' // paste Google Sheet "Publish to web" CSV link here. Empty = use menu.csv
+  sheetCsvUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSyAOzX9e7Ho0e9h3b3mUG5F8x7GiQv-tQWiNU4fWPvMqHsns8SQCPQ9MIiN0Rhd3sa0wUF8SzSxe--/pub?gid=4278897&single=true&output=csv' // paste Google Sheet "Publish to web" CSV link here. Empty = use menu.csv
 };
 // =============================================
 
