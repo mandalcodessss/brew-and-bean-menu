@@ -1,0 +1,10 @@
+category,name,price,description,veg,available,photo
+Coffee,Cappuccino,120,Rich espresso with steamed milk foam,yes,yes,
+Coffee,Cold Coffee,140,Chilled coffee blended with ice cream,yes,yes,
+Coffee,Espresso,90,Strong single shot,yes,yes,
+Snacks,Veg Sandwich,110,Grilled with cheese and fresh veggies,yes,yes,
+Snacks,Garlic Bread,130,Crispy with cheesy garlic butter,yes,yes,
+Snacks,French Fries,100,Salted and crispy,yes,yes,
+Snacks,Chicken Sandwich,150,Grilled chicken with mayo,no,yes,
+Desserts,Brownie,120,Warm chocolate brownie,yes,yes,
+Desserts,Cheesecake,160,Classic baked cheesecake,yes,no,

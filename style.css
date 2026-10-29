@@ -1,0 +1,25 @@
+:root{--bg:#faf7f2;--card:#fff;--ink:#2a211b;--mute:#7a6f66;--brand:#8b4a2b;--line:#eadfd3}
+@media (prefers-color-scheme:dark){:root{--bg:#1c1713;--card:#2a221c;--ink:#f3ebe3;--mute:#b3a699;--brand:#e0a070;--line:#3d332b}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{position:sticky;top:0;background:var(--bg);padding:16px 16px 8px;z-index:5;border-bottom:1px solid var(--line)}
+h1{margin:0;font-size:26px;color:var(--brand)}
+#tagline{margin:2px 0 10px;color:var(--mute);font-size:14px}
+#search{width:100%;padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);font-size:15px}
+#chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0 4px;scrollbar-width:none}
+.chip{flex:none;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:14px;cursor:pointer}
+.chip.on{background:var(--brand);border-color:var(--brand);color:#fff}
+main{max-width:640px;margin:0 auto;padding:8px 16px 24px}
+.cat{margin:20px 0 8px;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.item{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px}
+.item img{width:64px;height:64px;object-fit:cover;border-radius:10px}
+.info{flex:1;min-width:0}
+.name{display:flex;align-items:center;gap:8px;font-weight:600}
+.desc{margin:4px 0 0;font-size:13px;color:var(--mute)}
+.price{font-weight:700;color:var(--brand);white-space:nowrap}
+.dot{width:12px;height:12px;border:1.5px solid;border-radius:3px;position:relative;flex:none}
+.dot::after{content:"";position:absolute;inset:2px;border-radius:50%;background:currentColor}
+.veg{color:#2e9e4f}.nonveg{color:#c0392b}
+.out{opacity:.5}.out .price{color:var(--mute);font-weight:500;font-size:13px}
+.empty{text-align:center;color:var(--mute);padding:32px 0}
+footer{text-align:center;color:var(--mute);font-size:12px;padding:16px}
