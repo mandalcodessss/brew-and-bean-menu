@@ -1,9 +1,16 @@
 // ===== Edit only this part for each café =====
 const CONFIG = {
-  name: 'Brew & Bean',
-  tagline: 'Fresh coffee, good vibes',
+  name: 'Kailash Parbat',
+  tagline: 'Taste & Tradition Since 1952',
   currency: '₹',
-  sheetCsvUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSyAOzX9e7Ho0e9h3b3mUG5F8x7GiQv-tQWiNU4fWPvMqHsns8SQCPQ9MIiN0Rhd3sa0wUF8SzSxe--/pub?gid=4278897&single=true&output=csv' // paste Google Sheet "Publish to web" CSV link here. Empty = use menu.csv
+  sheetCsvUrl: '',        // Google Sheet "Publish to web" CSV link. Empty = use menu.csv
+  logo: 'logo.png',       // café logo file in the same folder
+  payment: true,          // false = menu only (₹3k plan), true = pay buttons (₹5k plan)
+  review: true,           // show Google review button after paying
+  upiId: '',              // e.g. cafe@okbank (café's own UPI ID)
+  upiName: 'Kailash Parbat',
+  upiQr: 'upi_qr.png',    // café's own UPI QR image
+  googleReview: ''        // https://search.google.com/local/writereview?placeid=PLACE_ID
 };
 // =============================================
 
@@ -50,9 +57,45 @@ function start(rows) {
   chips(); render();
 }
 
+// ----- Branding -----
 document.title = CONFIG.name + ' Menu';
 $('#cafe-name').textContent = CONFIG.name;
 $('#tagline').textContent = CONFIG.tagline;
+const logo = new Image();
+logo.onload = () => { document.documentElement.style.setProperty('--logo', `url("${CONFIG.logo}")`); const l = $('#logo'); l.src = CONFIG.logo; l.hidden = false; };
+logo.src = CONFIG.logo;
+
+// ----- Pay and review -----
+const sheet = $('#sheet'), panel = $('#panel');
+const btn = (t, fn, cls) => { const b = el('button', 'btn ' + (cls || ''), t); b.onclick = fn; return b; };
+function view(title, ...nodes) {
+  panel.replaceChildren();
+  const x = el('button', 'x', '×'); x.onclick = () => { sheet.hidden = true; };
+  panel.append(x, el('h3', null, title), ...nodes); sheet.hidden = false;
+}
+function reviewBtn() {
+  if (!(CONFIG.review && CONFIG.googleReview)) return [];
+  const a = el('a', 'btn gold', 'Rate us on Google ★'); a.href = CONFIG.googleReview; a.target = '_blank'; a.rel = 'noopener';
+  return [el('p', 'note', 'Enjoyed your meal? Tell others.'), a];
+}
+const choose = () => view('How would you like to pay?', btn('Pay at counter', counter), btn('Pay online', online, 'alt'));
+const counter = () => view('Thank you!', el('p', 'note', 'Please pay at the counter. We hope you enjoyed your meal.'), ...reviewBtn());
+const paid = () => view('Thank you!', el('p', 'note', 'Please show the payment screen at the counter if asked.'), ...reviewBtn());
+const onlyReview = () => view('Thank you!', ...reviewBtn());
+function online() {
+  const n = [], im = el('img', 'upi'); im.src = CONFIG.upiQr; im.alt = 'UPI QR'; im.onerror = () => im.remove();
+  n.push(im, el('p', 'note', 'Scan with any UPI app and enter your bill amount.'));
+  if (CONFIG.upiId) { const a = el('a', 'btn alt', 'Open UPI app'); a.href = 'upi://pay?pa=' + encodeURIComponent(CONFIG.upiId) + '&pn=' + encodeURIComponent(CONFIG.upiName) + '&cu=INR'; n.push(a); }
+  n.push(btn("I've paid", paid)); view('Pay online', ...n);
+}
+sheet.onclick = e => { if (e.target === sheet) sheet.hidden = true; };
+const bar = $('#pay-bar');
+if (CONFIG.payment || (CONFIG.review && CONFIG.googleReview)) {
+  bar.hidden = false;
+  bar.textContent = CONFIG.payment ? 'Done eating? Pay & review' : 'Loved it? Rate us on Google';
+  bar.onclick = CONFIG.payment ? choose : onlyReview;
+}
+
 $('#search').oninput = e => { query = e.target.value.toLowerCase(); render(); };
 Papa.parse(CONFIG.sheetCsvUrl || 'menu.csv', {
   download: true, header: true, skipEmptyLines: true,
